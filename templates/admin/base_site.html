@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}مدیریت فروشگاه{% endblock %}
+
+{% block content_title %} <h1> پنل مدیریت </h1> {% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}"> مدیریت فروشگاآی شاپر </a></h1>
+{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+{% endblock %}
+{% block nav-global %}{% endblock %}

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'including/header_refrences.html' %}
+
+<body>
+{% include 'including/header.html' %}
+    <!-- navbar end and Header -->
+
+{% block content %}
+
+
+{% endblock %}
+
+
+<!-- Footer Start -->
+{% include 'including/footer.html' %}
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+{% include 'including/footer_refrences.html' %}
+</body>
+
+</html>

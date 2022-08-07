@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "B Yekan";
+    src: url("../fonts/Yekan.woff");
+    font-weight: normal;
+    font-style: auto;
+}
+
+* {
+    font-family: "B Yekan";
+}
+
+
+
+#header {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background: #6f42c1;
+    color: var(--header-color);
+    overflow: hidden;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    text-align: left;
+    background: #6f42c1;
+    color: var(--header-link-color);
+}
+
