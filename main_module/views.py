@@ -6,6 +6,6 @@ from product_module.models import Category , Product
 # Create your views here.
 
 
-class Index(TemplateView):
+class HomeView (TemplateView):
     template_name = 'main/index.html'
 
