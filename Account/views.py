@@ -20,7 +20,7 @@ class SignInView(View):
                 login(req, user)
                 return redirect('Home:home')
             else:
-                form.add_error('email', "User not fount please try again")
+                form.add_error('email', "User not found please try again")
         return render(req, self.template_name, {"form": form})
 
 
