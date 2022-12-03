@@ -33,3 +33,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name_plural = 'کاربرها'
         verbose_name = 'کاربر'
+
+
+class Otp(models.Model):
+    token = models.CharField(max_length=155, null=True)
+    phone = models.CharField(max_length=11)
+    code = models.SmallIntegerField(max_length=10)
+    expiration_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return F" شماره تماس : {self.phone}"
+
+    class Meta:
+        verbose_name_plural = 'کدهای تایید'
+        verbose_name = 'کد تایید'

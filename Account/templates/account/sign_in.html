@@ -10,47 +10,29 @@
             <h2 class="section-title px-5"><span class="px-2">Login</span></h2>
         </div>
         <div class="row px-xl-5">
-            <div class="col-lg-7 mb-5">
+            <div style="margin-left: 500px" class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
+                    {% if form.email.errors %}
+                        <div style="width: 350px">
+                            <div class="alert alert-danger">{{ form.email.errors }}</div>
+                        </div>
+                    {% endif %}
                     <form method="post" novalidate="novalidate">
                         {% csrf_token %}
-                        <div class="control-group">
-
-                            {% if form.email.errors %}
-                                <div>
-                                    <div class="alert alert-danger">{{ form.email.errors }}</div>
-                                </div>
-                            {% endif %}
-
+                        <div style="width: 200px" class="control-group">
                             {{ form.email }}
                             <p class="help-block text-danger"></p>
                         </div>
-                        <div class="control-group">
+                        <div style="width: 200px" class="control-group">
                             {{ form.password }}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" type="submit"> login </button>
+                            <button style="margin-left: 50px" class="btn btn-primary py-2 px-4" type="submit"> login
+                            </button>
                         </div>
                     </form>
-                </div>
-            </div>
-            <div class="col-lg-5 mb-5">
-                <h5 class="font-weight-semi-bold mb-3">Get In Touch</h5>
-                <p>Justo sed diam ut sed amet duo amet lorem amet stet sea ipsum, sed duo amet et. Est elitr dolor elitr
-                    erat sit sit. Dolor diam et erat clita ipsum justo sed.</p>
-                <div class="d-flex flex-column mb-3">
-                    <h5 class="font-weight-semi-bold mb-3">Store 1</h5>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-                </div>
-                <div class="d-flex flex-column">
-                    <h5 class="font-weight-semi-bold mb-3">Store 2</h5>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
                 </div>
             </div>
         </div>

@@ -11,5 +11,5 @@ class RequiredLoginMixin:
 class AuthenticatedMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("home:home")
+            return redirect("Home:home")
         return super().dispatch(request, *args, **kwargs)

@@ -1,14 +1,14 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreationForm, UserChangeForm
 from django.contrib import admin
-from .models import User
+from .models import User, Otp
 
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'fullname', 'phone', 'is_admin','is_active', 'get_jalali_date')
+    list_display = ('email', 'fullname', 'phone', 'is_admin', 'is_active', 'get_jalali_date')
     list_filter = ('is_active', 'is_admin')
 
     fieldsets = (
@@ -37,3 +37,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Otp)

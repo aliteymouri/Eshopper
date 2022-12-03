@@ -4,12 +4,17 @@ from .models import User
 from django import forms
 
 
+def start_with_09(value):
+    if value[:2] != "09" or len(value) < 11:
+        raise forms.ValidationError('Please enter a valid phone', code='start_with_09')
+
+
 class UserCreationForm(forms.ModelForm):
-    password = forms.CharField(label='گذرواژه ',
-                               widget=forms.PasswordInput({"placeholder": "گذرواژه", "id": "pass"}))
-    confirm_password = forms.CharField(label='تایید گذرواژه ',
+    password = forms.CharField(label='password ',
+                               widget=forms.PasswordInput({"placeholder": "password", 'class': 'form-control'}))
+    confirm_password = forms.CharField(label='confirm_password',
                                        widget=forms.PasswordInput(
-                                           {"placeholder": "تایید گذرواژه", "id": "confirm_pass"}))
+                                           {"placeholder": "Repeat password", 'class': 'form-control'}))
 
     class Meta:
         model = User
@@ -19,15 +24,15 @@ class UserCreationForm(forms.ModelForm):
         password = self.cleaned_data.get('password')
         confirm_password = self.cleaned_data.get('confirm_password')
         if password and confirm_password and password != confirm_password:
-            raise ValidationError("رمزعبور مشابه نیست")
+            raise ValidationError("passwords didn't match")
         elif len(password and confirm_password) < 8:
-            raise ValidationError("رمز عبور وارد شده کمتر از 8 کاراکتر میباشد")
+            raise ValidationError("your password is less than 8 characters")
         return confirm_password
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if len(phone) < 11:
-            raise ValidationError("یک شماره تماس معتبر وارد کنید")
+            raise ValidationError("Please enter a valid phone")
         return phone
 
     def save(self, commit=True):
@@ -40,13 +45,13 @@ class UserCreationForm(forms.ModelForm):
 
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(
-        help_text="برای تغییر گذرواژه <a href=\"../password/\">کلیک کنید</a>"
+        help_text="to change password <a href=\"../password/\">click here</a>"
     )
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if len(phone) < 11:
-            raise ValidationError("یک شماره تماس معتبر وارد کنید")
+            raise ValidationError("Please enter a valid phone")
         return phone
 
     class Meta:
@@ -59,24 +64,24 @@ class SignInForm(forms.Form):
         widget=forms.EmailInput({'class': "form-control", "placeholder": "Email"}),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput({'class': "form-control", "placeholder": "Password",}),
+        widget=forms.PasswordInput({'class': "form-control", "placeholder": "Password", }),
     )
-
-
-def start_with_09(value):
-    if value[:2] != "09":
-        raise forms.ValidationError('یک شماره تماس معتبر وارد کنید', code='start_with_09')
 
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(
-        widget=forms.EmailInput({'class': "email-input", "placeholder": "پست الکترونیک"}),
+        widget=forms.EmailInput({'class': "form-control", "placeholder": "Email"}),
     )
     fullname = forms.CharField(
-        widget=forms.TextInput({'class': "email-input", "placeholder": "نام و نام خانوادگی"}),
+        widget=forms.TextInput({'class': "form-control", "placeholder": "Fullname"}),
     )
-    phone_number = forms.CharField(
-        widget=forms.TextInput({'class': "email-input", "placeholder": "شماره تماس", 'maxlength': 11}),
+    phone = forms.CharField(
+        widget=forms.TextInput({'class': "form-control", "placeholder": "Phone", 'maxlength': 11}),
         validators=[start_with_09]
     )
 
+
+class OtpForm(forms.Form):
+    code = forms.CharField(
+        widget=forms.TextInput({'class': "form-control", "placeholder": "Code", 'maxlength': 4}),
+    )
