@@ -8,4 +8,5 @@ urlpatterns = [
     path('sign_up', views.SignUpView.as_view(), name='sign_up'),
     path('logout', views.LogoutView.as_view(), name='logout'),
     path('otp', views.CheckOtpView.as_view(), name='otp'),
+    path('editprofile/<int:pk>/change', views.EditProfileView.as_view(), name='edit_profile'),
 ]

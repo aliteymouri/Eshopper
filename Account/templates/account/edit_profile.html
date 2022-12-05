@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">EditProfile</span></h2>
+        </div>
+        <div style="margin-left: 500px" class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form">
+                    <div id="success"></div>
+                    <form method="post" novalidate="novalidate">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div style="width: 350px">
+                                    <div class="alert alert-danger">{{ field.errors }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div style="width: 200px" class="control-group">
+                            {{ form.email }}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div style="width: 200px" class="control-group">
+                            {{ form.fullname }}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div style="width: 200px" class="control-group">
+                            {{ form.phone }}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div style="width: 200px" class="control-group">
+                            {{ form.bio }}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div style="margin-right: 20px">
+                            <button class="btn btn-primary py-2 px-4" type="submit">Save information</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock %}

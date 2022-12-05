@@ -85,3 +85,25 @@ class OtpForm(forms.Form):
     code = forms.CharField(
         widget=forms.TextInput({'class': "form-control", "placeholder": "Code", 'maxlength': 4}),
     )
+
+
+class EditProfileForm(forms.ModelForm):
+    email = forms.EmailField(
+        widget=forms.EmailInput({'class': "form-control", "placeholder": "email"}),
+    )
+    fullname = forms.CharField(
+        widget=forms.TextInput({'class': "form-control", "placeholder": "fullname"}),
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput({'class': "form-control", "placeholder": "phone", 'maxlength': 11}),
+        validators=[start_with_09]
+    )
+    bio = forms.CharField(required=False,
+                          widget=forms.Textarea(
+                              {'class': "form-control", "placeholder": "biography", "rows": 3, })
+                          )
+    image = forms.ImageField(required=False, )
+
+    class Meta:
+        model = User
+        fields = ('email', 'fullname', 'phone', 'image', 'bio')

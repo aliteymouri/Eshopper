@@ -12,15 +12,15 @@
         <div style="margin-left: 500px" class="row px-xl-5">
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
-                    <div id="success"></div>
+                    <div align="center" class="alert alert-info">We have send a code to your phone</div>
                     {% if form.code.errors %}
-                        <div style="width: 350px">
+                        <div>
                             <div class="alert alert-danger">{{ form.code.errors }}</div>
                         </div>
                     {% endif %}
                     <form method="post" novalidate="novalidate">
                         {% csrf_token %}
-                        <div class="control-group">
+                        <div style="width: 200px" class="control-group">
                             {{ form.code }}
                             <p class="help-block text-danger"></p>
                         </div>

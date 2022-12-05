@@ -138,7 +138,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="{% url 'Home:home' %}" class="nav-item nav-link">Home</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
                         <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
@@ -153,7 +153,7 @@
                     <div class="navbar-nav ml-auto py-0">
                         {% if request.user.is_authenticated %}
                             <a href="{% url 'Account:logout' %}" class="nav-item nav-link">logout</a>
-                            <a href="" style="color: #007bff" class="nav-item nav-link">{{ request.user.fullname }}</a>
+                            <a href="{% url 'Account:edit_profile' request.user.id %}" style="color: #007bff" class="nav-item nav-link">{{ request.user.fullname }}</a>
 
                         {% else %}
                             <a href="{% url 'Account:sign_in' %}" class="nav-item nav-link">Login</a>

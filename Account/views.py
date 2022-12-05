@@ -1,11 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import View, CreateView, UpdateView, FormView
 from django.shortcuts import render, redirect, reverse
-from .forms import SignInForm, SignUpForm, OtpForm
-from django.views.generic import View, CreateView
-from .mixins import AuthenticatedMixin
+from .forms import SignInForm, SignUpForm, OtpForm, EditProfileForm
+from .mixins import AuthenticatedMixin, RequiredLoginMixin
+from uuid import uuid4
 from ShoppingGrill.settings import SMS
 from .models import Otp, User
 from random import randint
+
+from django.urls import reverse_lazy
 
 
 class SignInView(AuthenticatedMixin, View):
@@ -41,35 +44,43 @@ class SignUpView(AuthenticatedMixin, CreateView):
         SMS.verification(
             {'receptor': form.cleaned_data["phone"], 'type': '1', 'template': 'randecode', 'param1': code}
         )
-        Otp.objects.create(phone=form.cleaned_data['phone'], code=code)
+        token = str(uuid4())
+        Otp.objects.create(phone=form.cleaned_data['phone'], code=code, token=token)
         print(code)
-        return redirect(reverse('Account:otp') + f'?phone={form.cleaned_data["phone"]}')
+        return redirect(reverse('Account:otp') + f'?token={token}')
 
     def get(self, *args, **kwargs):
         return super(SignUpView, self).get(*args, **kwargs)
 
 
-class CheckOtpView(View):
-    template_name = 'account/verify_phone.html'
+class CheckOtpView(AuthenticatedMixin, FormView):
+    template_name = 'account/otp.html'
     form_class = OtpForm
+    success_url = reverse_lazy('Home:home')
 
-    def get(self, req):
-        form = self.form_class()
-        return render(req, self.template_name, {'form': form})
+    def form_valid(self, form):
+        token = self.request.GET.get('token')
+        if Otp.objects.filter(code=form.cleaned_data['code'], token=token).exists():
+            otp = Otp.objects.get(token=token)
+            user = User.objects.get(phone=otp.phone)
+            user.is_active = True
+            user.save()
+            login(self.request, user)
+            otp.delete()
+            return redirect('Home:home')
+        else:
+            form.add_error('code', 'code is invalid')
+        return render(self.request, self.template_name, {"form": form})
 
-    def post(self, req):
-        form = self.form_class(req.POST)
-        if form.is_valid():
-            phone = req.GET.get('phone')
-            if Otp.objects.filter(code=form.cleaned_data['code'], phone=phone).exists():
-                user = User.objects.get(phone=phone)
-                user.is_active = True
-                user.save()
-                login(req, user)
-                return redirect('Home:home')
-            else:
-                form.add_error('code', 'code is invalid')
-        return render(req, self.template_name, {"form": form})
+
+class EditProfileView(RequiredLoginMixin, UpdateView):
+    template_name = 'account/edit_profile.html'
+    success_url = reverse_lazy('Home:home')
+    form_class = EditProfileForm
+    model = User
+
+    def get_object(self, *args, **kwargs):
+        return self.request.user
 
 
 class LogoutView(View):
