@@ -1,14 +1,13 @@
-from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, CreateView, UpdateView, FormView
-from django.shortcuts import render, redirect, reverse
 from .forms import SignInForm, SignUpForm, OtpForm, EditProfileForm
+from django.contrib.auth import authenticate, login, logout
 from .mixins import AuthenticatedMixin, RequiredLoginMixin
-from uuid import uuid4
-from ShoppingGrill.settings import SMS
+from django.shortcuts import render, redirect, reverse
+from Eshopper.settings import SMS
+from django.urls import reverse_lazy
 from .models import Otp, User
 from random import randint
-
-from django.urls import reverse_lazy
+from uuid import uuid4
 
 
 class SignInView(AuthenticatedMixin, View):
@@ -56,7 +55,6 @@ class SignUpView(AuthenticatedMixin, CreateView):
 class CheckOtpView(AuthenticatedMixin, FormView):
     template_name = 'account/otp.html'
     form_class = OtpForm
-    success_url = reverse_lazy('Home:home')
 
     def form_valid(self, form):
         token = self.request.GET.get('token')
@@ -69,7 +67,7 @@ class CheckOtpView(AuthenticatedMixin, FormView):
             otp.delete()
             return redirect('Home:home')
         else:
-            form.add_error('code', 'code is invalid')
+            form.add_error('code', 'Code is invalid')
         return render(self.request, self.template_name, {"form": form})
 
 
