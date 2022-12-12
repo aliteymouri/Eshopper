@@ -8,6 +8,7 @@ ghasedakpack==0.1.13
 idna==3.4
 persiantools==3.0.1
 Pillow==9.3.0
+python-decouple==3.6
 pytz==2022.6
 requests==2.28.1
 six==1.16.0

@@ -14,6 +14,7 @@ import os
 from os import path
 from pathlib import Path
 import ghasedakpack
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,4 +138,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Account.User'
 
-SMS = ghasedakpack.Ghasedak("61097569858f764b474f1780d5ec45922bd357a6cc184b937c0e72854ed61290")
+SMS = ghasedakpack.Ghasedak("YourApiKey")
