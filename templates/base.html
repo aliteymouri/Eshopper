@@ -68,14 +68,15 @@
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
-            <form action="">
+            <form action="{% url 'product:search' %}">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
+
+                    <input type="text" name="q" class="form-control" placeholder="Search for products"
+                           value="{{ request.GET.q }}" required>
                     <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
+                        <button type="submit" class="btn btn-primary px-4">Send</button>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -140,7 +141,6 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{% url 'Home:home' %}" class="nav-item nav-link">Home</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -153,7 +153,8 @@
                     <div class="navbar-nav ml-auto py-0">
                         {% if request.user.is_authenticated %}
                             <a href="{% url 'Account:logout' %}" class="nav-item nav-link">logout</a>
-                            <a href="{% url 'Account:edit_profile' request.user.id %}" style="color: #007bff" class="nav-item nav-link">{{ request.user.fullname }}</a>
+                            <a href="{% url 'Account:edit_profile' request.user.id %}" style="color: #007bff"
+                               class="nav-item nav-link">{{ request.user.fullname }}</a>
 
                         {% else %}
                             <a href="{% url 'Account:sign_in' %}" class="nav-item nav-link">Login</a>
@@ -194,8 +195,6 @@
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
                         <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop
-                            Detail</a>
                         <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping
                             Cart</a>
                         <a class="text-dark mb-2" href="checkout.html"><i

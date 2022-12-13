@@ -4,6 +4,7 @@ from django.db import models
 
 class Category(models.Model):
     title = models.CharField(max_length=50, unique=True)
+    image = models.ImageField(upload_to='categories')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -29,7 +30,7 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='products')
     price = models.SmallIntegerField()
-    discount = models.SmallIntegerField(null=True,blank=True)
+    discount = models.SmallIntegerField(null=True, blank=True)
     size = models.ManyToManyField(Size, related_name='products')
     is_active = models.BooleanField()
     slug = models.SlugField(unique=True, allow_unicode=True, null=True, blank=True)
