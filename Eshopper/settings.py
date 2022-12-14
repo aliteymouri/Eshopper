@@ -140,4 +140,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Account.User'
 
-SMS = ghasedakpack.Ghasedak("YourApiKey")
+SMS = ghasedakpack.Ghasedak("None")  # Your api key goes here

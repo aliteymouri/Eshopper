@@ -4,11 +4,16 @@ from django.db import models
 
 class Category(models.Model):
     title = models.CharField(max_length=50, unique=True)
-    image = models.ImageField(upload_to='categories')
+    image = models.ImageField(upload_to='categories', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(unique=True, allow_unicode=True, null=True, blank=True)
 
     def __str__(self):
         return F" category : {self.title}"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super(Category, self).save()
 
 
 class Color(models.Model):
@@ -28,10 +33,11 @@ class Size(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=80)
     description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='categories')
     image = models.ImageField(upload_to='products')
     price = models.SmallIntegerField()
     discount = models.SmallIntegerField(null=True, blank=True)
-    size = models.ManyToManyField(Size, related_name='products')
+    size = models.ManyToManyField(Size, related_name='sizes',null=True,blank=True)
     is_active = models.BooleanField()
     slug = models.SlugField(unique=True, allow_unicode=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

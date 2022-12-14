@@ -133,14 +133,16 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
+                            <form action="{% url 'product:search' %}">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search by name">
+
+                                    <input type="text" required name="q" class="form-control"
+                                           placeholder="Search by name"
+                                           value="{{ request.GET.q }}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
+                                        <button type="submit" class="btn btn-outline-primary px-4">Send</button>
                                     </div>
+
                                 </div>
                             </form>
                             <div class="dropdown ml-4">
@@ -206,9 +208,11 @@
 
                                     {% for i in page_obj.paginator.page_range %}
                                         {% if page_obj.number == i %}
-                                            <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                            <li class="page-item active"><a class="page-link"
+                                                                            href="?page={{ i }}">{{ i }}</a></li>
                                         {% else %}
-                                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                            </li>
                                         {% endif %}
                                     {% endfor %}
 
