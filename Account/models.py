@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Otp(models.Model):
     token = models.CharField(max_length=155, null=True)
     phone = models.CharField(max_length=11)
-    code = models.SmallIntegerField(max_length=10)
+    code = models.CharField(max_length=4)
     expiration_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

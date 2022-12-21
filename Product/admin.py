@@ -13,3 +13,4 @@ class CateAdmin(admin.ModelAdmin):
 admin.site.register(models.Category)
 admin.site.register(models.Size)
 admin.site.register(models.Color)
+admin.site.register(models.Comment)
