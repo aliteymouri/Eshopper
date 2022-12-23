@@ -1,12 +1,18 @@
 from django.db.models import Q
-from django.shortcuts import render
-from Product.models import Product, Category
+from django.shortcuts import render, redirect
+from Product.models import Product, Category, Comment
 from django.views.generic import DetailView, ListView, View
 
 
 class ProductDetailView(DetailView):
     template_name = 'product/product_detail.html'
     model = Product
+
+    def post(self, req, *args, **kwargs):
+        text = req.POST.get('text')
+        if text:
+            Comment.objects.create(text=text, author=req.user, product=self.get_object())
+        return redirect('product:product_detail', self.get_object().slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
