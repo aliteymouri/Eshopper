@@ -32,7 +32,7 @@
                         <small class="fas fa-star-half-alt"></small>
                         <small class="far fa-star"></small>
                     </div>
-                    <small class="pt-1">(50 Reviews)</small>
+                    <small class="pt-1">({{ object.comments.all.count }} Reviews)</small>
                 </div>
                 {% if product.discount %}
                     <del class="font-weight-semi-bold mb-4">${{ object.price }}</del>
@@ -187,13 +187,6 @@
                                         <div class="media-body">
                                             <h6>{{ comment.author.fullname }}<small> -
                                                 <i>{{ comment.created_at }}</i></small></h6>
-                                            <div class="text-primary mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
                                             <p>{{ comment.text }}</p>
                                         </div>
                                     </div>
@@ -203,20 +196,11 @@
                             <div class="col-md-6">
                                 <h4 class="mb-4">Leave a review</h4>
                                 <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">Your Rating * :</p>
-                                    <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
                                 </div>
                                 <form method="POST">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="message">Your Review *</label>
-                                        <textarea id="message" name="text" cols="30" rows="5"
+                                        <textarea required id="message" name="text" cols="30" rows="5"
                                                   class="form-control"></textarea>
                                     </div>
                                     <div class="form-group mb-0">

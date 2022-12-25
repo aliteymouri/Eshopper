@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Home.apps.HomeConfig',
     'Account.apps.AccountConfig',
     'Product.apps.ProductConfig',
+    'Contact_us',
 
     # Libraries
     "django_cleanup.apps.CleanupConfig",

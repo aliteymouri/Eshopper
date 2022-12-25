@@ -41,7 +41,7 @@ class SignUpView(AuthenticatedMixin, CreateView):
 
         code = randint(1000, 9999)
         SMS.verification(
-            {'receptor': form.cleaned_data["phone"], 'type': '1', 'template': 'randecode', 'param1': code}
+            {'receptor': form.cleaned_data["phone"], 'type': '1', 'templates': 'randecode', 'param1': code}
         )
         token = str(uuid4())
         Otp.objects.create(phone=form.cleaned_data['phone'], code=code, token=token)
