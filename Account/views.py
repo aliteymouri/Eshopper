@@ -24,7 +24,7 @@ class SignInView(AuthenticatedMixin, View):
             user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
                 login(req, user)
-                return redirect('Home:home')
+                return redirect('home:home')
             else:
                 form.add_error('email', "User not found please try again")
         return render(req, self.template_name, {"form": form})
@@ -65,7 +65,7 @@ class CheckOtpView(AuthenticatedMixin, FormView):
             user.save()
             login(self.request, user)
             otp.delete()
-            return redirect('Home:home')
+            return redirect('home:home')
         else:
             form.add_error('code', 'Code is invalid')
         return render(self.request, self.template_name, {"form": form})
@@ -73,15 +73,10 @@ class CheckOtpView(AuthenticatedMixin, FormView):
 
 class EditProfileView(RequiredLoginMixin, UpdateView):
     template_name = 'account/edit_profile.html'
-    success_url = reverse_lazy('Home:home')
+    success_url = reverse_lazy('home:home')
     form_class = EditProfileForm
     model = User
 
     def get_object(self, *args, **kwargs):
         return self.request.user
 
-
-class LogoutView(View):
-    def get(self, req):
-        logout(req)
-        return redirect('Account:sign_in')

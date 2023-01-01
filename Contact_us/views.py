@@ -9,4 +9,4 @@ class ContactUs(FormView):
 
     def form_valid(self, form):
         form.save()
-        return redirect('Home:home')
+        return redirect('home:home')

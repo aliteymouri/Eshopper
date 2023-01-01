@@ -197,16 +197,20 @@
                                 <h4 class="mb-4">Leave a review</h4>
                                 <div class="d-flex my-3">
                                 </div>
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-group">
+                                {% if not request.user.is_authenticated %}
+                                    <div class="alert alert-danger">To leave a comment you need to log in to your account</div>
+                                {% else %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
                                         <textarea required id="message" name="text" cols="30" rows="5"
                                                   class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                    </div>
-                                </form>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                        </div>
+                                    </form>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
